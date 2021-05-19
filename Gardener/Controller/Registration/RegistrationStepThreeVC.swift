@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import Firebase
 
 class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate {
     
@@ -24,6 +25,9 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     let locationManager = CLLocationManager()
     lazy var searchResults = [MKLocalSearchCompletion]()
     lazy var locationDictionary = LocationModel()
+    lazy var user = UserModel()
+    private var ref: DatabaseReference!
+    private var progressIndicator = ProgressHUD(text: "Please wait...")
     
     //MARK:- View Life cycle.
     override func viewDidLoad() {
@@ -33,12 +37,7 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     
     //MARK:- Actions
     @objc func annotationBtnTapped(sender:UITapGestureRecognizer){
-        print(self.locationDictionary)
-        let SB = UIStoryboard(name: "Main", bundle: nil)
-        let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true, completion: nil)
+        updateUser()
     }
     
     @IBAction func backBtnTapped(_ sender: UIButton) {
@@ -46,8 +45,39 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     }
     
     //MARK:- Private functions
+    private func updateUser(){
+        self.view.addSubview(progressIndicator)
+        user.city = locationDictionary.city
+        user.state = locationDictionary.state
+        user.country = locationDictionary.country
+        user.postalCode = locationDictionary.zipcode
+        user.address = locationDictionary.titleString
+        
+        let dict:[String:Any] = [
+            "city":user.city,
+            "state":user.state,
+            "country":user.country,
+            "postalCode":user.postalCode,
+            "address":user.address
+        ]
+        
+        self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
+            self.progressIndicator.removeFromSuperview()
+            if err == nil {
+                let SB = UIStoryboard(name: "Main", bundle: nil)
+                let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
+                vc.user = self.user
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            }else{
+                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+            }
+        }
+    }
     
     private func setupViews() {
+        ref = Database.database().reference()
         let tap = UITapGestureRecognizer(target: self, action: #selector(annotationBtnTapped(sender:)))
         self.CustomAnnotationView.isUserInteractionEnabled = true
         self.CustomAnnotationView.addGestureRecognizer(tap)

@@ -6,24 +6,97 @@
 //
 
 import UIKit
+import Firebase
 
-class AddPlantWaterAmountVC: UIViewController {
-
+class AddPlantWaterAmountVC: UIViewController, UITextFieldDelegate {
+    
+    //MARK:- Properties.
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var wateringView: UIView!
+    @IBOutlet weak var inputTextField: UITextField!
+    @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    //MARK:- Variables.
+    var editStatus :Bool = false
+    var plantData = PlantModel()
+    private var ref: DatabaseReference!
+    private var progressIndicator = ProgressHUD(text: "Please wait...")
+    var delegate : getPlantData?
+    
+    //MARK:- View Life Cycle.
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK:- Actions.
+    @IBAction func backBtnTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
-
+    
+    @IBAction func saveBtnTapped(_ sender: UIButton) {
+        if inputTextField.text!.isEmpty || Int(inputTextField.text!) == 0 {
+            showAlert(type: .information, Alert: "Add Plant", details: "Please write Amount of water", controller: self, status: false)
+        }else {
+            if editStatus == true {
+                updatePlant()
+            }else {
+                let SB = UIStoryboard(name: "Plant", bundle: nil)
+                let vc = SB.instantiateViewController(identifier: "AddPlantFrequencyVC") as! AddPlantFrequencyVC
+                plantData.amountOfWater = inputTextField.text!
+                vc.plantData = plantData
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    //MARK:- Private Functions.
+    private func setupViews() {
+        ref = Database.database().reference()
+        saveBtn.addButtonShadow()
+        inputTextField.addUnderLine()
+        wateringView.addShadow()
+        inputTextField.becomeFirstResponder()
+        inputTextField.delegate = self
+        if editStatus == true {
+            inputTextField.text = plantData.amountOfWater
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+         guard let text = textField.text else { return true }
+         let newLength = text.count + string.count - range.length
+         return newLength <= 3
+    }
+    
+    private func updatePlant(){
+        self.view.addSubview(self.progressIndicator)
+        plantData.amountOfWater = inputTextField.text!
+        let dict:[String:Any] = [
+            "amountOfWater":plantData.amountOfWater
+        ]
+        self.ref.child("Plants").child("Data").child(plantData.categoryName).child(plantData.id).updateChildValues(dict) { (err, dbRef) in
+            if err == nil {
+                self.updateMyPlant(dict: dict)
+            }else{
+                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+            }
+        }
+    }
+    
+    private func updateMyPlant(dict:[String:Any]){
+        self.ref.child("MyPlants").child(plantData.userId).child(plantData.id).updateChildValues(dict) { (err, dbRef) in
+            self.progressIndicator.removeFromSuperview()
+            if err == nil {
+                self.delegate?.push(self.plantData)
+                self.dismiss(animated: true, completion: nil)
+            }else{
+                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+            }
+        }
+    }
+    
 }

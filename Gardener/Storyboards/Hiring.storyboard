@@ -1,7 +1,158 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--HiringVC-->
+        <scene sceneID="WIF-Fz-kId">
+            <objects>
+                <viewController storyboardIdentifier="HiringVC" id="FwW-1g-ZFN" customClass="HiringVC" customModule="Gardener" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AqC-0u-rz3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6yX-aB-WNc">
+                                <rect key="frame" x="0.0" y="44" width="414" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh1-lW-Npr">
+                                        <rect key="frame" x="15" y="5" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="A6s-jy-c0c"/>
+                                            <constraint firstAttribute="width" constant="30" id="FwY-cD-BsN"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.23529411759999999" green="0.70196078429999997" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="menu">
+                                            <color key="titleShadowColor" red="0.23529411759999999" green="0.70196078429999997" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="menuBtnTapped:" destination="FwW-1g-ZFN" eventType="touchUpInside" id="bVo-AI-gmc"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Hiring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlX-Kb-slx">
+                                        <rect key="frame" x="167" y="9.5" width="80.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwR-pW-WF4">
+                                        <rect key="frame" x="0.0" y="39.5" width="414" height="0.5"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="G7a-3H-yU5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="iwR-pW-WF4" secondAttribute="bottom" id="1h3-3W-FVt"/>
+                                    <constraint firstItem="lh1-lW-Npr" firstAttribute="top" secondItem="6yX-aB-WNc" secondAttribute="top" constant="5" id="AYO-93-WhY"/>
+                                    <constraint firstItem="lh1-lW-Npr" firstAttribute="leading" secondItem="6yX-aB-WNc" secondAttribute="leading" constant="15" id="UNq-WY-Ub8"/>
+                                    <constraint firstAttribute="height" constant="40" id="ZWc-da-JMk"/>
+                                    <constraint firstItem="jlX-Kb-slx" firstAttribute="centerY" secondItem="6yX-aB-WNc" secondAttribute="centerY" id="g2u-fH-Ci2"/>
+                                    <constraint firstAttribute="trailing" secondItem="iwR-pW-WF4" secondAttribute="trailing" id="gQY-pb-fRB"/>
+                                    <constraint firstAttribute="bottom" secondItem="lh1-lW-Npr" secondAttribute="bottom" constant="5" id="hey-sp-5yT"/>
+                                    <constraint firstItem="jlX-Kb-slx" firstAttribute="centerX" secondItem="6yX-aB-WNc" secondAttribute="centerX" id="okE-WG-qgI"/>
+                                    <constraint firstItem="iwR-pW-WF4" firstAttribute="leading" secondItem="6yX-aB-WNc" secondAttribute="leading" id="wQm-0p-dEV"/>
+                                </constraints>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9DH-yN-s0Z" customClass="CustomSegmentedControl" customModule="Gardener" customModuleProvider="target">
+                                <rect key="frame" x="20.5" y="89" width="373" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="5Wy-Rj-afR"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Requested"/>
+                                    <segment title="Hired"/>
+                                </segments>
+                                <connections>
+                                    <action selector="SegmentControlTapped:" destination="FwW-1g-ZFN" eventType="valueChanged" id="utS-le-rWa"/>
+                                </connections>
+                            </segmentedControl>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ada-V0-Vhm">
+                                <rect key="frame" x="82" y="307" width="250" height="282"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jobRequest" translatesAutoresizingMaskIntoConstraints="NO" id="7P5-Zy-ymm">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="OtT-xH-7ox"/>
+                                            <constraint firstAttribute="width" constant="250" id="ZFl-ed-E7b"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Job Requested!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vur-4s-kBK">
+                                        <rect key="frame" x="38" y="258" width="174.5" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2GB-2B-FQa">
+                                <rect key="frame" x="197.5" y="743" width="186.5" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="RFS-zP-hoh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <state key="normal" title="Find Gardener">
+                                    <color key="titleColor" red="0.41176470590000003" green="0.41176470590000003" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="findGardenerBtnTapped:" destination="FwW-1g-ZFN" eventType="touchUpInside" id="Ugs-rB-cBV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="440-VN-P9s"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9DH-yN-s0Z" firstAttribute="width" secondItem="AqC-0u-rz3" secondAttribute="width" multiplier="0.9" id="5qx-hX-9eM"/>
+                            <constraint firstItem="Ada-V0-Vhm" firstAttribute="centerX" secondItem="AqC-0u-rz3" secondAttribute="centerX" id="89y-6K-hIS"/>
+                            <constraint firstItem="440-VN-P9s" firstAttribute="bottom" secondItem="2GB-2B-FQa" secondAttribute="bottom" constant="20" id="97z-So-MaU"/>
+                            <constraint firstItem="6yX-aB-WNc" firstAttribute="top" secondItem="440-VN-P9s" secondAttribute="top" id="X8o-VN-fqY"/>
+                            <constraint firstAttribute="trailing" secondItem="6yX-aB-WNc" secondAttribute="trailing" id="dFn-Fq-hY3"/>
+                            <constraint firstItem="440-VN-P9s" firstAttribute="trailing" secondItem="2GB-2B-FQa" secondAttribute="trailing" constant="30" id="e1K-pd-Jnt"/>
+                            <constraint firstItem="9DH-yN-s0Z" firstAttribute="top" secondItem="6yX-aB-WNc" secondAttribute="bottom" constant="5" id="eXJ-Ce-hKM"/>
+                            <constraint firstItem="2GB-2B-FQa" firstAttribute="width" secondItem="AqC-0u-rz3" secondAttribute="width" multiplier="0.45" id="nAv-Co-igT"/>
+                            <constraint firstItem="9DH-yN-s0Z" firstAttribute="centerX" secondItem="AqC-0u-rz3" secondAttribute="centerX" id="nlK-KG-TQU"/>
+                            <constraint firstItem="Ada-V0-Vhm" firstAttribute="centerY" secondItem="AqC-0u-rz3" secondAttribute="centerY" id="sza-ES-zfC"/>
+                            <constraint firstItem="6yX-aB-WNc" firstAttribute="leading" secondItem="440-VN-P9s" secondAttribute="leading" id="t2D-yg-Wy5"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="canTab" id="bxa-ef-dyg">
+                        <color key="badgeColor" red="0.23529411759999999" green="0.70196078429999997" blue="0.4431372549" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                    </tabBarItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="alertImage" destination="7P5-Zy-ymm" id="Ye4-Zm-dHB"/>
+                        <outlet property="alertLbl" destination="vur-4s-kBK" id="sQX-Be-Kv6"/>
+                        <outlet property="findGardenerBtn" destination="2GB-2B-FQa" id="XLK-vS-S65"/>
+                        <outlet property="segmentControl" destination="9DH-yN-s0Z" id="cKf-oX-dhF"/>
+                        <outlet property="titleLbl" destination="jlX-Kb-slx" id="9LK-N1-1lr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yre-t0-E8K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1461" y="1546"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="canTab" width="27" height="25"/>
+        <image name="jobRequest" width="512" height="512"/>
+        <image name="menu" width="512" height="512"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

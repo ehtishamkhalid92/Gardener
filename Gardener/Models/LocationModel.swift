@@ -6,3 +6,14 @@
 //
 
 import Foundation
+struct LocationModel {
+    var city  = String()
+    var country = String()
+    var state = String()
+    var zipcode = String()
+    var latitude = Double()
+    var longtitude = Double()
+    var isoCountryCode = String()
+    var titleString = String()
+    var street = String()
+}

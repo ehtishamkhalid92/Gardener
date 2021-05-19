@@ -37,7 +37,11 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func signIn(_ sender: UIButton) {
-        showAlert(type: .information, Alert: "Data Limited Exceeded!", details: "Please subscribe to Diamond you data limited ended you have left only 1 GB", controller: self)
+        let SB = UIStoryboard(name: "Main", bundle: nil)
+        let vc = SB.instantiateViewController(identifier: "LoginVC") as! LoginVC
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK:- Private Functions.

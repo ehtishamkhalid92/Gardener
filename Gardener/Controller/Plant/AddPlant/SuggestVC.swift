@@ -37,6 +37,7 @@ class SuggestVC: UIViewController {
             showAlert(type: .information, Alert: "Information", details: "Pleasw write something", controller: self, status: false)
             self.textView.becomeFirstResponder()
         }else {
+            self.view.endEditing(true)
             sendsuggessionToAdmin()
         }
     }
@@ -64,8 +65,8 @@ class SuggestVC: UIViewController {
         self.ref.child("Suggest").child(Id).setValue(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
             if err == nil {
-                Toast.show(message: "Successfully Added", controller: self)
                 self.textView.text = ""
+                showAlert(type: .success, Alert: "Thank you for suggestion", details: "Message send to the Gardening Team. Some one from team review your suggestion.", controller: self, status: false)
             }else{
                 showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
             }

@@ -6,24 +6,34 @@
 //
 
 import UIKit
-
+import Firebase
 class ForgotPasswordVC: UIViewController {
-
+    
+    //MARK:- Properties.
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var sendBtn: UIButton!
+    
+    
+    //MARK:- View Life Cycle.
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        sendBtn.addButtonShadow()
+        emailTextField.UISetupToTextField()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func backBtnTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
+    
+    @IBAction func sendRequestBtnTapped(_ sender: UIButton) {
+        Auth.auth().sendPasswordReset(withEmail: emailTextField.text!) { (error) in
+            if error == nil {
+                showAlert(type: .success, Alert: "Request Send", details: "An email is send to your register email address", controller: self, status: false)
+                self.emailTextField.text = ""
+            }else {
+                showAlert(type: .error, Alert: "Error", details: "\(error?.localizedDescription ?? "")", controller: self, status: false)
+            }
+        }
+    }
 
 }

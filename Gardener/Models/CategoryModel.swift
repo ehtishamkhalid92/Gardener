@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct CategoryModel {
+    var filePath = String()
+    var imageName = String()
+    var id = String()
+    var userId = String()
+    var name = String()
+}

@@ -164,12 +164,11 @@ extension PlantVC: UICollectionViewDelegate,UICollectionViewDataSource{
             vc.modalTransitionStyle = .crossDissolve
             self.present(vc, animated: true, completion: nil)
         }else {
-//            let vc = storyboard?.instantiateViewController(identifier: "PlantDetailsVC") as! PlantDetailsVC
-//            vc.data = array[indexPath.row]
-//            vc.userStatus = true
-//            vc.modalPresentationStyle = .fullScreen
-//            vc.modalTransitionStyle = .crossDissolve
-//            self.present(vc, animated: true, completion: nil)
+            let vc = storyboard?.instantiateViewController(identifier: "PlantsDetailsVC") as! PlantsDetailsVC
+            vc.data = array[indexPath.row]
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
         }
     }
     

@@ -37,7 +37,7 @@ class SelectSubPlantVC: UIViewController, UISearchBarDelegate {
     
     @IBAction func addPlantBtnTapped(_ sender: UIButton) {
         let SB = UIStoryboard(name: "Plant", bundle: nil)
-        let vc = SB.instantiateViewController(identifier: "AddPlantVC") as! AddPlantVC
+        let vc = SB.instantiateViewController(identifier: "AddPlantImageVC") as! AddPlantImageVC
         vc.category = self.category
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
@@ -149,6 +149,22 @@ extension SelectSubPlantVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isFilter{
+            let vc = storyboard?.instantiateViewController(identifier: "PlantsDetailsVC") as! PlantsDetailsVC
+            vc.data = filterArray[indexPath.row]
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
+        }else{
+            let vc = storyboard?.instantiateViewController(identifier: "PlantsDetailsVC") as! PlantsDetailsVC
+            vc.data = array[indexPath.row]
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     

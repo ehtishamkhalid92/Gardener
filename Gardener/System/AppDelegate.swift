@@ -7,20 +7,114 @@
 
 import UIKit
 import CoreData
+import Firebase
+import IQKeyboardManagerSwift
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    //MARK:- Variables
     var window: UIWindow?
-
+    let notificationCenter = UNUserNotificationCenter.current()
+    
+    //MARK:- App Life Cycle.
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        let SB = UIStoryboard(name: "Main", bundle: nil)
-        let VC = SB.instantiateViewController(withIdentifier: "ViewController") as! ViewController
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = VC
-        self.window?.makeKeyAndVisible()
+        
+        //TODO:- Firebase Configuration
+        FirebaseApp.configure()
+        
+        //TODO:- UI Setup
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableDebugging = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        
+        UISearchBar.appearance().tintColor = UIColor(hexString: "#424242")
+        UITextField.appearance().tintColor = UIColor(hexString: "#c5c5c5")
+        
+        UITextField.appearance().tintColor = .black 
+        
+        //TODO: Setting up login Status
+        if SessionManager.instance.isUserLoggedIn() {
+            SessionManager.instance.loginData()
+        } else {
+            let SB = UIStoryboard(name: "Main", bundle: nil)
+            let vc = SB.instantiateViewController(withIdentifier: "WelcomeVC") as! WelcomeVC
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window?.rootViewController = vc
+        }
+        
+        // TODO:- Setup Notifications
+        notificationCenter.delegate = self
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        notificationCenter.requestAuthorization(options: options) {
+            (didAllow, error) in
+            if !didAllow {
+                print("User has declined notifications")
+            }
+        }
+        
+        registerForPushNotifications()
+        
+//        SessionManager.instance.logout()
+        
         return true
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//          InstanceID.instanceID().instanceID(handler: { (result, error) in
+//              if let error = error {
+//                  print("Error fetching remote instange ID: \(error)")
+//              } else if let result = result {
+//                  print("Remote instance ID token: \(result.token)")
+//              }
+//          })
+      }
+    
+    //MARK:- Private Functions
+
+    func registerForPushNotifications() {
+      UNUserNotificationCenter.current()
+        .requestAuthorization(options: [.alert, .sound, .badge]) {
+          [weak self] granted, error in
+          guard let self = self else { return }
+          print("Permission granted: \(granted)")
+          guard granted else { return }
+          self.getNotificationSettings()
+      }
+    }
+    
+    func getNotificationSettings() {
+      UNUserNotificationCenter.current().getNotificationSettings { settings in
+        print("Notification settings: \(settings)")
+        guard settings.authorizationStatus == .authorized else { return }
+        DispatchQueue.main.async {
+          UIApplication.shared.registerForRemoteNotifications()
+        }
+      }
+    }
+
+  
+
+    func application(
+      _ application: UIApplication,
+      didFailToRegisterForRemoteNotificationsWithError error: Error) {
+      print("Failed to register: \(error)")
+    }
+    
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler:
+        @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+       print(userInfo)
+       
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
 
@@ -69,5 +163,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+// MARK:- Notification Delegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if response.notification.request.identifier == "Local Notification" {
+            print("Handling notifications with the Local Notification Identifier")
+        }
+        
+        completionHandler()
+    }
+    
+    func scheduleNotification(title: String, body: String) {
+    
+        let content = UNMutableNotificationContent()
+        let categoryIdentifire = "Delete Notification Type"
+        
+        content.title = title
+        content.body = body
+        content.sound = UNNotificationSound.default
+        content.badge = 1
+        content.categoryIdentifier = categoryIdentifire
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier = "Local Notification"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            }
+        }
+        
+        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
+        let deleteAction = UNNotificationAction(identifier: "DeleteAction", title: "Delete", options: [.destructive])
+        let category = UNNotificationCategory(identifier: categoryIdentifire,
+                                              actions: [snoozeAction, deleteAction],
+                                              intentIdentifiers: [],
+                                              options: [])
+        
+        notificationCenter.setNotificationCategories([category])
+    }
 }
 

@@ -7,7 +7,6 @@
 
 import UIKit
 import Firebase
-import FirebaseStorage
 
 class AddPlantImageVC: UIViewController {
     
@@ -16,13 +15,16 @@ class AddPlantImageVC: UIViewController {
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var itemImageBtn: UIButton!
     @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
     
     //MARK:- Variables.
     var category = CategoryModel()
     var selectedImage : UIImage?
-    lazy var user = SessionManager.instance.userData
+    var plantData = PlantModel()
+    var editStatus = false
     private var ref: DatabaseReference!
     private var progressIndicator = ProgressHUD(text: "Please wait...")
+    var delegate: getPlantData?
     
     //MARK:- View Life cycle.
     override func viewDidLoad() {
@@ -39,8 +41,20 @@ class AddPlantImageVC: UIViewController {
         if self.selectedImage == nil {
             showAlert(type: .information, Alert: "Add Plant", details: "Please select image", controller: self, status: false)
         }else {
-            let filePath = self.ref?.childByAutoId().key ?? ""
-            uploadImagePic(image: self.selectedImage!, name: "", filePath: filePath)
+            if editStatus == true {
+                deleteImage()
+            }else {
+                let SB = UIStoryboard(name: "Plant", bundle: nil)
+                let vc = SB.instantiateViewController(identifier: "AddPlantNameVC") as! AddPlantNameVC
+                var data = PlantModel()
+                data.image = selectedImage!
+                data.categoryId = category.id
+                data.categoryName = category.name
+                vc.plantData = data
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            }
         }
     }
     
@@ -79,74 +93,79 @@ class AddPlantImageVC: UIViewController {
         self.itemImage.isUserInteractionEnabled = true
         self.itemImage.addGestureRecognizer(tap)
         
-        
+        if editStatus == true {
+            self.itemImage.sd_setImage(with: URL(string: plantData.filePath), placeholderImage: UIImage(named: "tree"))
+        }
     }
     
-    
-    func uploadImagePic(image: UIImage, name: String, filePath: String) {
+    private func deleteImage() {
         self.view.addSubview(progressIndicator)
+        let storage = Storage.storage()
+        let storageRef = storage.reference().child("Plants").child(plantData.fileName)
+        //Removes image from storage
+        storageRef.delete { error in
+            if let error = error {
+                print(error)
+                showAlert(type: .error, Alert: "Error", details: error.localizedDescription, controller: self, status: false)
+            } else {
+                // File deleted successfully
+                self.updateImage(image: self.selectedImage!)
+            }
+        }
+    }
+    
+    func updateImage(image: UIImage) {
         guard let imageData: Data = image.jpegData(compressionQuality: 0.1) else {
             return
         }
-
+        
         let metaDataConfig = StorageMetadata()
         metaDataConfig.contentType = "image/jpg"
-
+        let filePath = self.ref?.childByAutoId().key ?? ""
         let storageRef = Storage.storage().reference(withPath: "Plants/\(filePath)")
-
+        
         storageRef.putData(imageData, metadata: metaDataConfig){ (metaData, error) in
             if let error = error {
                 print(error.localizedDescription)
                 showAlert(type: .error, Alert: "Error", details: "\(String(describing: error.localizedDescription))", controller: self, status: false)
                 return
             }
-
+            
             storageRef.downloadURL(completion: { (url: URL?, error: Error?) in
                 print(url?.absoluteString ?? "") // <- Download URL
-                self.addPlant(imageString: url?.absoluteString ?? "", filePath: filePath)
+                self.updatePlant(imageString: url?.absoluteString ?? "", filePath: filePath)
             })
         }
     }
-
-    private func addPlant(imageString:String,filePath:String){
-        let Id = self.ref?.childByAutoId().key ?? ""
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let date = df.string(from: Date())
+    
+    private func updatePlant(imageString:String,filePath:String){
+        self.plantData.filePath = imageString
+        self.plantData.fileName = filePath
         let dict:[String:Any] = [
-            "id":Id,
-            "filePath":imageString,
-            "fileName":filePath,
-//            "primaryName":primaryNameTextField.text!,
-//            "secoundryName":secoundryNameTextField.text!,
-//            "amountOfWater":amountOfWaterTextField.text!,
-//            "frequencyOfWater":frequencyOfWaterTextField.text!,
-//            "sunlight":sunlightTextField.text!,
-//            "location":locationTextField.text!,
-            "userId":self.user.userId,
-            "createdDate":date,
-            "categoryName":self.category.name,
-            "categoryId":self.category.id
+            "filePath":self.plantData.filePath,
+            "fileName":self.plantData.fileName,
         ]
-        self.ref.child("Plants").child("Data").child(category.name).child(Id).setValue(dict) { (err, dbRef) in
+        self.ref.child("Plants").child("Data").child(plantData.categoryName).child(plantData.id).updateChildValues(dict) { (err, dbRef) in
             if err == nil {
-                self.addMyPlant(dict: dict, plantId: Id)
+                self.updateMyPlant(dict: dict)
             }else{
                 showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
             }
         }
     }
     
-    private func addMyPlant(dict:[String:Any],plantId:String){
-        self.ref.child("MyPlants").child(self.user.userId).child(plantId).setValue(dict) { (err, dbRef) in
+    private func updateMyPlant(dict:[String:Any]){
+        self.ref.child("MyPlants").child(plantData.userId).child(plantData.id).updateChildValues(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
             if err == nil {
+                self.delegate?.push(self.plantData)
                 self.dismiss(animated: true, completion: nil)
             }else{
                 showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
             }
         }
     }
+    
     
     
 }
@@ -165,4 +184,5 @@ extension AddPlantImageVC: UIImagePickerControllerDelegate,UINavigationControlle
         }
         
     }
+    
 }

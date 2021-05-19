@@ -8,6 +8,17 @@
 import Foundation
 import UIKit
 
+//MARK:-  Custom Color
+// Green color Hex code
+
+let mediumGreen = UIColor(hexString:"#3CB371")
+let LighterGreen = UIColor(hexString:"#e3fbe3")
+let limeGreen = UIColor(hexString:"#EAFAF1")
+let dimgray = UIColor(hexString:"#696969")
+let silver = UIColor(hexString:"#C0C0C0")
+let SafetyYellow = UIColor(hexString:"#eed202")
+let RedOrange = UIColor(hexString:"#ff5349")
+
 extension UIColor {
     
     // TODO:-  Change the color by adding hexadecimal code
