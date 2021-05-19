@@ -94,6 +94,10 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="50t-Ap-Wwg">
+                                <rect key="frame" x="0.0" y="139" width="414" height="674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2GB-2B-FQa">
                                 <rect key="frame" x="197.5" y="743" width="186.5" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -117,13 +121,17 @@
                         <viewLayoutGuide key="safeArea" id="440-VN-P9s"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="50t-Ap-Wwg" secondAttribute="bottom" id="5N7-u6-7m8"/>
                             <constraint firstItem="9DH-yN-s0Z" firstAttribute="width" secondItem="AqC-0u-rz3" secondAttribute="width" multiplier="0.9" id="5qx-hX-9eM"/>
+                            <constraint firstItem="50t-Ap-Wwg" firstAttribute="leading" secondItem="440-VN-P9s" secondAttribute="leading" id="6Lu-ea-1Bv"/>
                             <constraint firstItem="Ada-V0-Vhm" firstAttribute="centerX" secondItem="AqC-0u-rz3" secondAttribute="centerX" id="89y-6K-hIS"/>
                             <constraint firstItem="440-VN-P9s" firstAttribute="bottom" secondItem="2GB-2B-FQa" secondAttribute="bottom" constant="20" id="97z-So-MaU"/>
+                            <constraint firstItem="440-VN-P9s" firstAttribute="trailing" secondItem="50t-Ap-Wwg" secondAttribute="trailing" id="Wjg-l2-Jk7"/>
                             <constraint firstItem="6yX-aB-WNc" firstAttribute="top" secondItem="440-VN-P9s" secondAttribute="top" id="X8o-VN-fqY"/>
                             <constraint firstAttribute="trailing" secondItem="6yX-aB-WNc" secondAttribute="trailing" id="dFn-Fq-hY3"/>
                             <constraint firstItem="440-VN-P9s" firstAttribute="trailing" secondItem="2GB-2B-FQa" secondAttribute="trailing" constant="30" id="e1K-pd-Jnt"/>
                             <constraint firstItem="9DH-yN-s0Z" firstAttribute="top" secondItem="6yX-aB-WNc" secondAttribute="bottom" constant="5" id="eXJ-Ce-hKM"/>
+                            <constraint firstItem="50t-Ap-Wwg" firstAttribute="top" secondItem="9DH-yN-s0Z" secondAttribute="bottom" constant="10" id="jee-0N-1OC"/>
                             <constraint firstItem="2GB-2B-FQa" firstAttribute="width" secondItem="AqC-0u-rz3" secondAttribute="width" multiplier="0.45" id="nAv-Co-igT"/>
                             <constraint firstItem="9DH-yN-s0Z" firstAttribute="centerX" secondItem="AqC-0u-rz3" secondAttribute="centerX" id="nlK-KG-TQU"/>
                             <constraint firstItem="Ada-V0-Vhm" firstAttribute="centerY" secondItem="AqC-0u-rz3" secondAttribute="centerY" id="sza-ES-zfC"/>

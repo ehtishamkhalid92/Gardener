@@ -17,7 +17,6 @@
 		0A7B4414264AD4080061514B /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B4413264AD4080061514B /* AlertViewController.swift */; };
 		0A7B4454264AEB8D0061514B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B4453264AEB8D0061514B /* GoogleService-Info.plist */; };
 		0A7B446C264AF6340061514B /* RegistrationStepOneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B446B264AF6340061514B /* RegistrationStepOneVC.swift */; };
-		0A7B446F264AF7450061514B /* CustomFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B446E264AF7450061514B /* CustomFunctions.swift */; };
 		0A7B448E264AFB480061514B /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B448D264AFB480061514B /* UITextFieldExtension.swift */; };
 		0A7B4491264B254C0061514B /* CountryCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B4490264B254C0061514B /* CountryCodeModel.swift */; };
 		0A7B4495264B39550061514B /* RegistrationStepTwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B4494264B39550061514B /* RegistrationStepTwoVC.swift */; };
@@ -68,6 +67,8 @@
 		0AAD57772646FB0500E368B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AAD57762646FB0500E368B6 /* Assets.xcassets */; };
 		0AAD577A2646FB0500E368B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AAD57782646FB0500E368B6 /* LaunchScreen.storyboard */; };
 		0ADEE05C2654EBD900013688 /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE05B2654EBD800013688 /* FeedbackVC.swift */; };
+		0ADEE0602655AA8100013688 /* JobRequestStepOneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE05F2655AA8100013688 /* JobRequestStepOneVC.swift */; };
+		0ADEE0642655AA9A00013688 /* MonthMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0632655AA9A00013688 /* MonthMetadata.swift */; };
 		7ED072A9F8859F86F0E8AC77 /* Pods_Gardener.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECE8725B27E973E8765C2A8 /* Pods_Gardener.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,7 +83,6 @@
 		0A7B4413264AD4080061514B /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		0A7B4453264AEB8D0061514B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A7B446B264AF6340061514B /* RegistrationStepOneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationStepOneVC.swift; sourceTree = "<group>"; };
-		0A7B446E264AF7450061514B /* CustomFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFunctions.swift; sourceTree = "<group>"; };
 		0A7B448D264AFB480061514B /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		0A7B4490264B254C0061514B /* CountryCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeModel.swift; sourceTree = "<group>"; };
 		0A7B4494264B39550061514B /* RegistrationStepTwoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationStepTwoVC.swift; sourceTree = "<group>"; };
@@ -135,6 +135,8 @@
 		0AAD57792646FB0500E368B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0AAD577B2646FB0500E368B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0ADEE05B2654EBD800013688 /* FeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
+		0ADEE05F2655AA8100013688 /* JobRequestStepOneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRequestStepOneVC.swift; sourceTree = "<group>"; };
+		0ADEE0632655AA9A00013688 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
 		6B6D1E2E1751F89C131697E6 /* Pods-Gardener.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gardener.release.xcconfig"; path = "Target Support Files/Pods-Gardener/Pods-Gardener.release.xcconfig"; sourceTree = "<group>"; };
 		751047DE73C6C151F1B28B08 /* Pods-Gardener.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gardener.debug.xcconfig"; path = "Target Support Files/Pods-Gardener/Pods-Gardener.debug.xcconfig"; sourceTree = "<group>"; };
 		EECE8725B27E973E8765C2A8 /* Pods_Gardener.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gardener.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,12 +157,12 @@
 		0A7B43E8264AC3670061514B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0ADEE05E2655AA5500013688 /* Hiring */,
 				0A7E2DF626529F6F00305CC9 /* Plant */,
 				0A7B44CA264C32CE0061514B /* TabBarVC.swift */,
 				0AAD576E2646FB0300E368B6 /* WelcomeVC.swift */,
 				0A7B44A1264BC4A40061514B /* Registration */,
 				0A7B44C4264C10590061514B /* LoginVC.swift */,
-				0A7B44D0264C3B9D0061514B /* HiringVC.swift */,
 				0A7B44D3264C3BF90061514B /* ChatRoomVC.swift */,
 				0A7B44D7264C49940061514B /* ForgotPasswordVC.swift */,
 				0A7B44DA264D35130061514B /* dateOfBirthVC.swift */,
@@ -173,22 +175,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		0A7B43E9264AC3700061514B /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				0A7B446E264AF7450061514B /* CustomFunctions.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		0A7B43EA264AC3800061514B /* ViewCell */ = {
+		0A7B43EA264AC3800061514B /* View */ = {
 			isa = PBXGroup;
 			children = (
 				0A7E2C932650740C00305CC9 /* AddPlantCollectionViewCell.swift */,
 				0A7E2C9F26512DDB00305CC9 /* CategoryTableViewCell.swift */,
 				0A7E2DED2651834E00305CC9 /* SubCategoryTableViewCell.swift */,
 			);
-			path = ViewCell;
+			path = View;
 			sourceTree = "<group>";
 		};
 		0A7B43EB264AC3930061514B /* Models */ = {
@@ -200,15 +194,9 @@
 				0A7B44C7264C2F3F0061514B /* SessionManager.swift */,
 				0A7E2D882651313C00305CC9 /* CategoryModel.swift */,
 				0A7E2DF02651849700305CC9 /* PlantModel.swift */,
+				0ADEE0632655AA9A00013688 /* MonthMetadata.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		0A7B43EC264AC3A90061514B /* WebServices */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WebServices;
 			sourceTree = "<group>";
 		};
 		0A7B43ED264AC3DB0061514B /* UIExtensions */ = {
@@ -342,13 +330,20 @@
 				0A7B43F9264AC5940061514B /* Storyboards */,
 				0A7B43F7264AC5560061514B /* System */,
 				0A7B43ED264AC3DB0061514B /* UIExtensions */,
-				0A7B43EC264AC3A90061514B /* WebServices */,
 				0A7B43EB264AC3930061514B /* Models */,
-				0A7B43EA264AC3800061514B /* ViewCell */,
-				0A7B43E9264AC3700061514B /* ViewModels */,
+				0A7B43EA264AC3800061514B /* View */,
 				0A7B43E8264AC3670061514B /* Controller */,
 			);
 			path = Gardener;
+			sourceTree = "<group>";
+		};
+		0ADEE05E2655AA5500013688 /* Hiring */ = {
+			isa = PBXGroup;
+			children = (
+				0A7B44D0264C3B9D0061514B /* HiringVC.swift */,
+				0ADEE05F2655AA8100013688 /* JobRequestStepOneVC.swift */,
+			);
+			path = Hiring;
 			sourceTree = "<group>";
 		};
 		3CA64BAFA8E202B201E5B441 /* Frameworks */ = {
@@ -488,13 +483,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ADEE0602655AA8100013688 /* JobRequestStepOneVC.swift in Sources */,
 				0A7E2C942650740C00305CC9 /* AddPlantCollectionViewCell.swift in Sources */,
 				0A7E2E602653A79E00305CC9 /* AddPlantSunlightVC.swift in Sources */,
 				0AAD576F2646FB0300E368B6 /* WelcomeVC.swift in Sources */,
 				0A7B43F3264AC3FC0061514B /* UIViewExtensions.swift in Sources */,
 				0A7B44C5264C10590061514B /* LoginVC.swift in Sources */,
 				0A7E2DE826516A2B00305CC9 /* AddPlantImageVC.swift in Sources */,
-				0A7B446F264AF7450061514B /* CustomFunctions.swift in Sources */,
 				0A7E2E632653A88700305CC9 /* AddPlantLocationVC.swift in Sources */,
 				0A7B449E264BB0310061514B /* RegistrationStepFourVC.swift in Sources */,
 				0A7B43F5264AC3FC0061514B /* GlobalStrings.swift in Sources */,
@@ -524,6 +519,7 @@
 				0A7B44A9264BD0440061514B /* UserModel.swift in Sources */,
 				0A7B44E7265026F40061514B /* MenuVC.swift in Sources */,
 				0A7B446C264AF6340061514B /* RegistrationStepOneVC.swift in Sources */,
+				0ADEE0642655AA9A00013688 /* MonthMetadata.swift in Sources */,
 				0A7B4498264B9F770061514B /* LocationModel.swift in Sources */,
 				0A7B44CE264C37950061514B /* PlantVC.swift in Sources */,
 				0A7B44D1264C3B9D0061514B /* HiringVC.swift in Sources */,

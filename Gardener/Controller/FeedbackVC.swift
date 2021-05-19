@@ -33,11 +33,10 @@ class FeedbackVC: UIViewController {
     }
     
     @IBAction func sendBtnTapped(_ sender: UIButton) {
+        self.view.endEditing(true)
         if textView.text.isEmpty {
             showAlert(type: .information, Alert: "Information", details: "Pleasw write something", controller: self, status: false)
-            self.textView.becomeFirstResponder()
         }else {
-            self.view.endEditing(true)
             sendFeedbackToAdmin()
         }
     }
@@ -53,6 +52,7 @@ class FeedbackVC: UIViewController {
     }
     
     private func sendFeedbackToAdmin(){
+        self.view.addSubview(progressIndicator)
         let Id = self.ref?.childByAutoId().key ?? ""
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
