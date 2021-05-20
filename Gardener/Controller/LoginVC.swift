@@ -41,11 +41,9 @@ class LoginVC: UIViewController {
     
     @IBAction func signInBtnTapped(_ sender: UIButton) {
         if emailTextField.text!.isEmpty{
-            self.emailTextField.becomeFirstResponder()
-            showAlert(type: .information, Alert: "Gardener", details: "Please enter your email address.\n Thank you!", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter your login email address.", controller: self)
         }else if passwordTextField.text!.isEmpty{
-            self.passwordTextField.becomeFirstResponder()
-            showAlert(type: .information, Alert: "Gardener", details: "Please enter your password.\n Thank you!", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter your login password.", controller: self)
         }else {
             applyLogin()
         }
@@ -61,6 +59,8 @@ class LoginVC: UIViewController {
         emailTextField.UISetupToTextField()
         passwordTextField.UISetupToTextField()
         signInBtn.addButtonShadow()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     private func applyLogin(){
@@ -68,18 +68,17 @@ class LoginVC: UIViewController {
             if let error = error as NSError? {
             switch AuthErrorCode(rawValue: error.code) {
             case .operationNotAllowed:
-                showAlert(type: .information, Alert: "Information", details: "Indicates that email and password accounts are not enabled. Enable them in the Auth section of the Firebase console", controller: self, status: false)
+                showAlert(title: "Operation Not Allowed!", message: "Indicates that email and password accounts are not enabled. Enable them in the Auth section of the Firebase console", controller: self)
             case .userDisabled:
-                showAlert(type: .information, Alert: "Information", details: "The user account has been disabled by an administrator", controller: self, status: false)
+                showAlert(title: "User Disabled!", message: "The user account has been disabled by an administrator", controller: self)
             case .wrongPassword:
-                showAlert(type: .information, Alert: "Information", details: "The password is invalid or the user does not have a password.", controller: self, status: false)
+                showAlert(title: "Wrong Password!", message: "The password is invalid or the user does not have a password.", controller: self)
             case .invalidEmail:
-              // Error: Indicates the email address is malformed.
-                showAlert(type: .information, Alert: "Information", details: "Indicates the email address is malformed.", controller: self, status: false)
+                showAlert(title: "Invalid Email!", message: "Indicates the email address is malformed.", controller: self)
             case .userNotFound:
-            showAlert(type: .information, Alert: "Information", details: "User not found.", controller: self, status: false)
+                showAlert(title: "User Not Found!", message: "No user found regarding this email address.", controller: self)
             default:
-                print("Error: \(error.localizedDescription)")
+                showAlert(title: "Error!", message: "\(error.localizedDescription)", controller: self)
             }
           } else {
             let userInfo = Auth.auth().currentUser
@@ -103,7 +102,7 @@ class LoginVC: UIViewController {
             user.email = value?["email"] as? String ?? ""
             user.firstName = value?["firstName"] as? String ?? ""
             user.filePath = value?["filePath"] as? String ?? ""
-            user.imageName = value?["imageName"] as? String ?? ""
+            user.fileName = value?["imageName"] as? String ?? ""
             user.isPhoneVerified = value?["isPhoneVerified"] as? Bool ?? false
             user.isUserVerified = value?["isUserVerified"] as? Bool ?? false
             user.isProfileCompleted = value?["isProfileCompleted"] as? Bool ?? false
@@ -122,7 +121,17 @@ class LoginVC: UIViewController {
             SessionManager.instance.loginData()
             }) { (error) in
               print(error.localizedDescription)
-            showAlert(type: .error, Alert: "Error!", details: error.localizedDescription, controller: self, status: false)
+            showAlert(title: "Login", message: "Error: \(error.localizedDescription)", controller: self)
           }
+    }
+}
+extension LoginVC: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        }else {
+            applyLogin()
+        }
+        return true
     }
 }

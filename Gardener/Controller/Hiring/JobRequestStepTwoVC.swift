@@ -1,15 +1,15 @@
 //
-//  RegistrationStepThreeVC.swift
+//  JobRequestStepTwoVC.swift
 //  Gardener
 //
-//  Created by Ehtisham Khalid on 12.05.21.
+//  Created by Ehtisham Khalid on 19.05.21.
 //
 
 import UIKit
 import MapKit
 import Firebase
 
-class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate {
+class JobRequestStepTwoVC: UIViewController,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate {
     
     //MARK:- Properties.
     @IBOutlet weak var annotationAddress: UILabel!
@@ -25,9 +25,6 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     let locationManager = CLLocationManager()
     lazy var searchResults = [MKLocalSearchCompletion]()
     lazy var locationDictionary = LocationModel()
-    lazy var user = UserModel()
-    private var ref: DatabaseReference!
-    private var progressIndicator = ProgressHUD(text: "Please wait...")
     
     //MARK:- View Life cycle.
     override func viewDidLoad() {
@@ -37,17 +34,13 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     
     //MARK:- Actions
     @objc func annotationBtnTapped(sender:UITapGestureRecognizer){
-        let SB = UIStoryboard(name: "Main", bundle: nil)
-        let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
-        self.user.city = locationDictionary.city
-        self.user.state = locationDictionary.state
-        self.user.country = locationDictionary.country
-        self.user.postalCode = locationDictionary.zipcode
-        self.user.address = locationDictionary.titleString
-        vc.user = self.user
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true, completion: nil)
+//        user.city = locationDictionary.city
+//        user.state = locationDictionary.state
+//        user.country = locationDictionary.country
+//        user.postalCode = locationDictionary.zipcode
+//        user.address = locationDictionary.titleString
+        print(locationDictionary)
+        search(state: locationDictionary.state)
     }
     
     @IBAction func backBtnTapped(_ sender: UIButton) {
@@ -55,39 +48,23 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     }
     
     //MARK:- Private functions
-    private func updateUser(){
-        self.view.addSubview(progressIndicator)
-        user.city = locationDictionary.city
-        user.state = locationDictionary.state
-        user.country = locationDictionary.country
-        user.postalCode = locationDictionary.zipcode
-        user.address = locationDictionary.titleString
+    func search(state: String) {
+        let databaseRef = Database.database().reference().child("USER")
+        let query = databaseRef.queryOrdered(byChild: "state").queryStarting(atValue: state).queryEnding(atValue: "\(state)\\uf8ff")
         
-        let dict:[String:Any] = [
-            "city":user.city,
-            "state":user.state,
-            "country":user.country,
-            "postalCode":user.postalCode,
-            "address":user.address
-        ]
-        
-        self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
-            self.progressIndicator.removeFromSuperview()
-            if err == nil {
-                let SB = UIStoryboard(name: "Main", bundle: nil)
-                let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
-                vc.user = self.user
-                vc.modalPresentationStyle = .fullScreen
-                vc.modalTransitionStyle = .crossDissolve
-                self.present(vc, animated: true, completion: nil)
-            }else{
-                showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            guard snapshot.exists() != false else {
+                showAlert(title: "Data Not Found!", message: "Data not found regarding \(state)", controller: self)
+                return
+            }
+            showAlert(title: "Data Found regarding \(state).", message: "\(snapshot.value!)", controller: self)
+            DispatchQueue.main.async {
+                // Update TextFields here
             }
         }
     }
     
     private func setupViews() {
-        ref = Database.database().reference()
         let tap = UITapGestureRecognizer(target: self, action: #selector(annotationBtnTapped(sender:)))
         self.CustomAnnotationView.isUserInteractionEnabled = true
         self.CustomAnnotationView.addGestureRecognizer(tap)
@@ -237,7 +214,7 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
         }
     }
 }
-extension RegistrationStepThreeVC: MKLocalSearchCompleterDelegate {
+extension JobRequestStepTwoVC: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
         self.locationTableView.isHidden = false
@@ -250,7 +227,7 @@ extension RegistrationStepThreeVC: MKLocalSearchCompleterDelegate {
     }
     
 }
-extension RegistrationStepThreeVC: UITableViewDataSource ,UITableViewDelegate {
+extension JobRequestStepTwoVC: UITableViewDataSource ,UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

@@ -40,10 +40,15 @@ class RegistrationStepFourVC: UIViewController {
     
     @IBAction func nextBtnTapped(_ sender: UIButton) {
         if self.selectedImage != nil {
-            let filePath = self.ref?.childByAutoId().key ?? ""
-            uploadImagePic(image: self.selectedImage!, name: "", filePath: filePath)
+            let SB = UIStoryboard(name: "Main", bundle: nil)
+            let vc = SB.instantiateViewController(identifier: "RegistrationFinalStepVC") as! RegistrationFinalStepVC
+            vc.selectedImage = self.selectedImage!
+            vc.user = self.user
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
         }else {
-            showAlert(type: .information, Alert: "Profile Image", details: "Please select image", controller: self, status: false)
+            showAlert(title: "Image not selected!", message: "Please select image to continue.", controller: self)
         }
       
     }
@@ -87,8 +92,7 @@ class RegistrationStepFourVC: UIViewController {
 
         storageRef.putData(imageData, metadata: metaDataConfig){ (metaData, error) in
             if let error = error {
-                print(error.localizedDescription)
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: error.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Upload Image", message: "\(String(describing: error.localizedDescription))", controller: self)
                 return
             }
 
@@ -101,10 +105,10 @@ class RegistrationStepFourVC: UIViewController {
     
     private func updateUser(imageString:String,filePath:String){
         user.filePath = imageString
-        user.imageName = filePath
+        user.fileName = filePath
         let dict:[String:Any] = [
             "filePath":user.filePath,
-            "imageName":user.imageName
+            "imageName":user.fileName
         ]
         self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
@@ -116,7 +120,7 @@ class RegistrationStepFourVC: UIViewController {
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct UserModel: Codable {
     var userId = String()
@@ -20,7 +21,7 @@ struct UserModel: Codable {
     var country = String()
     var postalCode = String()
     var address = String()
-    var imageName = String()
+    var fileName = String()
     var filePath = String()
     var role = String()
     var isUserVerified = Bool()
@@ -36,5 +37,6 @@ struct UserModel: Codable {
     var DOB = String()
     var jobType = String()
     var notification = Bool()
+    var password = String()
 }
 

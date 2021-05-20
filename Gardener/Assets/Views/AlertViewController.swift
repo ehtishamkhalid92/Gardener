@@ -94,15 +94,12 @@ class AlertViewController: UIViewController {
         SessionManager.instance.logout()
     }
 }
-
-
-func showAlert(type: AlertType,Alert:String?,details:String?,controller:UIViewController,status:Bool?){
+func showAlertView(alertType:AlertType,title:String,message:String,controller:UIViewController){
     let sb = UIStoryboard(name: "Main", bundle: nil)
     let alertVC = sb.instantiateViewController(identifier: "AlertViewController") as! AlertViewController
-    alertVC.type = type
-    alertVC.alert = Alert
-    alertVC.details = details
-    alertVC.status = status ?? false
+    alertVC.type = alertType
+    alertVC.alert = title
+    alertVC.details = message
     alertVC.modalPresentationStyle = .overFullScreen
     controller.present(alertVC, animated: true, completion: nil)
 }

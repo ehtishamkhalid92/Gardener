@@ -18,6 +18,7 @@ class RegistrationFinalStepVC: UIViewController {
 
     //MARK:- Variables.
     var user = UserModel()
+    var selectedImage = UIImage()
     private var ref: DatabaseReference!
     private var progressIndicator = ProgressHUD(text: "Please wait...")
     
@@ -33,11 +34,11 @@ class RegistrationFinalStepVC: UIViewController {
     }
     
     @objc func landlordBtnTapped(sender: UITapGestureRecognizer){
-        UpdateUser(userType: "U")
+        CreateUser(userType: "U")
     }
     
     @objc func gardenerBtnTapped(sender: UITapGestureRecognizer){
-        UpdateUser(userType: "G")
+        CreateUser(userType: "G")
     }
     
     //MARK:- Private Functions
@@ -54,13 +55,106 @@ class RegistrationFinalStepVC: UIViewController {
         self.gardenerView.addGestureRecognizer(gardener)
     }
     
-    private func UpdateUser(userType:String){
+//    private func UpdateUser(userType:String){
+//        self.view.addSubview(progressIndicator)
+//        user.role = userType
+//        let dict:[String:Any] = [
+//            "role":user.role
+//        ]
+//        self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
+//            self.progressIndicator.removeFromSuperview()
+//            if err == nil {
+//                let SB = UIStoryboard(name: "Main", bundle: nil)
+//                let vc = SB.instantiateViewController(identifier: "FinalAnimationVC") as! FinalAnimationVC
+//                vc.user = self.user
+//                vc.modalPresentationStyle = .fullScreen
+//                vc.modalTransitionStyle = .crossDissolve
+//                self.present(vc, animated: true, completion: nil)
+//            }else{
+//                showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
+//            }
+//        }
+//    }
+    
+    private func CreateUser(userType:String){
+        self.user.role = userType
         self.view.addSubview(progressIndicator)
-        user.role = userType
-        let dict:[String:Any] = [
-            "role":user.role
+        Auth.auth().createUser(withEmail: self.user.email, password: self.user.password) { authResult, error in
+            self.progressIndicator.removeFromSuperview()
+            if let error = error as NSError? {
+                switch AuthErrorCode(rawValue: error.code) {
+                case .operationNotAllowed:
+                    showAlert(title: "Operation Not Allowed", message: "The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section", controller: self)
+                case .emailAlreadyInUse:
+                    showAlert(title: "Email Already In Use", message: "The email address is already in use by another account", controller: self)
+                case .invalidEmail:
+                    showAlert(title: "Invalid Email", message: "The email address is badly formatted", controller: self)
+                case .weakPassword:
+                    showAlert(title: "Weak Password", message: "The password must be 6 characters long or more", controller: self)
+                default:
+                    showAlert(title: "Registration", message: "Error: \(error.localizedDescription)", controller: self)
+                }
+            } else {
+                let newUserInfo = Auth.auth().currentUser
+                let userId = newUserInfo?.uid
+                self.user.userId = userId!
+                self.uploadProfileImagePic()
+            }
+        }
+    }
+    
+    func uploadProfileImagePic() {
+        self.view.addSubview(progressIndicator)
+        guard let imageData: Data = self.selectedImage.jpegData(compressionQuality: 0.1) else {
+            return
+        }
+
+        let metaDataConfig = StorageMetadata()
+        metaDataConfig.contentType = "image/jpg"
+        let imageId = self.ref?.childByAutoId().key ?? ""
+        let storageRef = Storage.storage().reference(withPath: "Profile/\(imageId)")
+
+        storageRef.putData(imageData, metadata: metaDataConfig){ (metaData, error) in
+            if let error = error {
+                showAlert(title: "Upload Image", message: "\(String(describing: error.localizedDescription))", controller: self)
+                return
+            }
+
+            storageRef.downloadURL(completion: { (url: URL?, error: Error?) in
+                print(url?.absoluteString ?? "")
+                self.user.fileName = imageId
+                self.user.filePath = url?.absoluteString ?? ""
+                self.addUserChildData()
+            })
+        }
+    }
+    
+    private func addUserChildData(){
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = df.string(from: Date())
+        user.date = date
+        user.isPhoneVerified = false
+        print(user)
+        let dict :[String:Any] = [
+            "userID": self.user.userId,
+            "date":self.user.date,
+            "firstName": self.user.firstName,
+            "lastName": self.user.lastName,
+            "email":self.user.email,
+            "countryCode": self.user.countryCode,
+            "phoneNumber": self.user.phoneNumber,
+            "filePath": self.user.filePath,
+            "imageName": self.user.fileName,
+            "postalCode": self.user.postalCode,
+            "address":self.user.address,
+            "city": self.user.city,
+            "country": self.user.country,
+            "state": self.user.state,
+            "role": self.user.role,
         ]
-        self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
+        print(dict)
+        self.ref.child("USER").child(self.user.userId).setValue(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
             if err == nil {
                 let SB = UIStoryboard(name: "Main", bundle: nil)
@@ -70,7 +164,7 @@ class RegistrationFinalStepVC: UIViewController {
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Registration", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

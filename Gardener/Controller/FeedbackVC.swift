@@ -35,7 +35,7 @@ class FeedbackVC: UIViewController {
     @IBAction func sendBtnTapped(_ sender: UIButton) {
         self.view.endEditing(true)
         if textView.text.isEmpty {
-            showAlert(type: .information, Alert: "Information", details: "Pleasw write something", controller: self, status: false)
+            showAlert(title: "Empty Text!", message: "Please write feedback to send message to the Gardener work team.", controller: self)
         }else {
             sendFeedbackToAdmin()
         }
@@ -68,10 +68,13 @@ class FeedbackVC: UIViewController {
         self.ref.child("Feedback").child(Id).setValue(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
             if err == nil {
-                self.textView.text = ""
-                showAlert(type: .success, Alert: "Thank you for Feedback", details: "Message send to the Gardening Team. Some one from team review the feedback.", controller: self, status: false)
+                let alert = UIAlertController(title: "Thank you for Feedback", message: "Message send to the Gardening Team. Some one from team review the feedback.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
+                    self.dismiss(animated: true, completion: nil)
+                }))
+                self.present(alert, animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Feedback", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

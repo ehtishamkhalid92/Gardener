@@ -44,7 +44,7 @@ class AvailabilityVC: UIViewController {
     
     @IBAction func nextBtnTapped(_ sender: UIButton) {
         if array.count == 0 {
-            showAlert(type: .information, Alert: "Information", details: "Please select Availble days", controller: self, status: false)
+            showAlert(title: "Availble Days Not Selected", message: "Please select Availble days for job. So that people can know when you availble.", controller: self)
         }else {
             updateUser()
         }
@@ -286,7 +286,7 @@ class AvailabilityVC: UIViewController {
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(user.firstName)'s Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

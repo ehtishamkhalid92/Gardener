@@ -69,6 +69,14 @@
 		0ADEE05C2654EBD900013688 /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE05B2654EBD800013688 /* FeedbackVC.swift */; };
 		0ADEE0602655AA8100013688 /* JobRequestStepOneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE05F2655AA8100013688 /* JobRequestStepOneVC.swift */; };
 		0ADEE0642655AA9A00013688 /* MonthMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0632655AA9A00013688 /* MonthMetadata.swift */; };
+		0ADEE07F2655AFC700013688 /* CalendarHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE07E2655AFC700013688 /* CalendarHeaderCell.swift */; };
+		0ADEE0822655AFEC00013688 /* CalendarDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0812655AFEC00013688 /* CalendarDateCell.swift */; };
+		0ADEE0852655B04D00013688 /* CalenderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0842655B04D00013688 /* CalenderExtension.swift */; };
+		0ADEE0882655B52400013688 /* JobRequestStepTwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0872655B52400013688 /* JobRequestStepTwoVC.swift */; };
+		0ADEE0F526566F6900013688 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0F426566F6900013688 /* TransitionAnimator.swift */; };
+		0ADEE0F82656891700013688 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0F72656891700013688 /* EmailViewController.swift */; };
+		0ADEE0FB265699D900013688 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0FA265699D900013688 /* PasswordViewController.swift */; };
+		0ADEE0FE26569E7E00013688 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEE0FD26569E7E00013688 /* PhoneViewController.swift */; };
 		7ED072A9F8859F86F0E8AC77 /* Pods_Gardener.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECE8725B27E973E8765C2A8 /* Pods_Gardener.framework */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +145,14 @@
 		0ADEE05B2654EBD800013688 /* FeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
 		0ADEE05F2655AA8100013688 /* JobRequestStepOneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRequestStepOneVC.swift; sourceTree = "<group>"; };
 		0ADEE0632655AA9A00013688 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
+		0ADEE07E2655AFC700013688 /* CalendarHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarHeaderCell.swift; sourceTree = "<group>"; };
+		0ADEE0812655AFEC00013688 /* CalendarDateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDateCell.swift; sourceTree = "<group>"; };
+		0ADEE0842655B04D00013688 /* CalenderExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderExtension.swift; sourceTree = "<group>"; };
+		0ADEE0872655B52400013688 /* JobRequestStepTwoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRequestStepTwoVC.swift; sourceTree = "<group>"; };
+		0ADEE0F426566F6900013688 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		0ADEE0F72656891700013688 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		0ADEE0FA265699D900013688 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		0ADEE0FD26569E7E00013688 /* PhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
 		6B6D1E2E1751F89C131697E6 /* Pods-Gardener.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gardener.release.xcconfig"; path = "Target Support Files/Pods-Gardener/Pods-Gardener.release.xcconfig"; sourceTree = "<group>"; };
 		751047DE73C6C151F1B28B08 /* Pods-Gardener.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gardener.debug.xcconfig"; path = "Target Support Files/Pods-Gardener/Pods-Gardener.debug.xcconfig"; sourceTree = "<group>"; };
 		EECE8725B27E973E8765C2A8 /* Pods_Gardener.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gardener.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +194,8 @@
 		0A7B43EA264AC3800061514B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0ADEE0812655AFEC00013688 /* CalendarDateCell.swift */,
+				0ADEE07E2655AFC700013688 /* CalendarHeaderCell.swift */,
 				0A7E2C932650740C00305CC9 /* AddPlantCollectionViewCell.swift */,
 				0A7E2C9F26512DDB00305CC9 /* CategoryTableViewCell.swift */,
 				0A7E2DED2651834E00305CC9 /* SubCategoryTableViewCell.swift */,
@@ -202,6 +220,7 @@
 		0A7B43ED264AC3DB0061514B /* UIExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				0ADEE0842655B04D00013688 /* CalenderExtension.swift */,
 				0A7E2DF32652788700305CC9 /* ZoomAndSnapFlowLayout.swift */,
 				0A7B43F1264AC3FC0061514B /* GlobalStrings.swift */,
 				0A7B43F0264AC3FC0061514B /* UIButtonExtensions.swift */,
@@ -211,6 +230,7 @@
 				0A7B44AB264BE2CA0061514B /* ProgressHUD.swift */,
 				0A7B44E92650404C0061514B /* Toast.swift */,
 				0A7E2E6D26545A9400305CC9 /* CustomSegmentedControl.swift */,
+				0ADEE0F426566F6900013688 /* TransitionAnimator.swift */,
 			);
 			path = UIExtensions;
 			sourceTree = "<group>";
@@ -274,6 +294,9 @@
 				0A7B449D264BB0310061514B /* RegistrationStepFourVC.swift */,
 				0A7B44A2264BC5040061514B /* RegistrationFinalStepVC.swift */,
 				0A7B44A5264BCAC70061514B /* FinalAnimationVC.swift */,
+				0ADEE0F72656891700013688 /* EmailViewController.swift */,
+				0ADEE0FA265699D900013688 /* PasswordViewController.swift */,
+				0ADEE0FD26569E7E00013688 /* PhoneViewController.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -342,6 +365,7 @@
 			children = (
 				0A7B44D0264C3B9D0061514B /* HiringVC.swift */,
 				0ADEE05F2655AA8100013688 /* JobRequestStepOneVC.swift */,
+				0ADEE0872655B52400013688 /* JobRequestStepTwoVC.swift */,
 			);
 			path = Hiring;
 			sourceTree = "<group>";
@@ -485,6 +509,7 @@
 			files = (
 				0ADEE0602655AA8100013688 /* JobRequestStepOneVC.swift in Sources */,
 				0A7E2C942650740C00305CC9 /* AddPlantCollectionViewCell.swift in Sources */,
+				0ADEE0F82656891700013688 /* EmailViewController.swift in Sources */,
 				0A7E2E602653A79E00305CC9 /* AddPlantSunlightVC.swift in Sources */,
 				0AAD576F2646FB0300E368B6 /* WelcomeVC.swift in Sources */,
 				0A7B43F3264AC3FC0061514B /* UIViewExtensions.swift in Sources */,
@@ -495,6 +520,8 @@
 				0A7B43F5264AC3FC0061514B /* GlobalStrings.swift in Sources */,
 				0A7B4414264AD4080061514B /* AlertViewController.swift in Sources */,
 				0A7B44A6264BCAC70061514B /* FinalAnimationVC.swift in Sources */,
+				0ADEE07F2655AFC700013688 /* CalendarHeaderCell.swift in Sources */,
+				0ADEE0852655B04D00013688 /* CalenderExtension.swift in Sources */,
 				0A7B448E264AFB480061514B /* UITextFieldExtension.swift in Sources */,
 				0A7B44DE264D92DC0061514B /* AvailabilityVC.swift in Sources */,
 				0A7B44E4264DA1190061514B /* RateVC.swift in Sources */,
@@ -504,8 +531,10 @@
 				0A7B44C8264C2F3F0061514B /* SessionManager.swift in Sources */,
 				0A7B43F4264AC3FC0061514B /* UIButtonExtensions.swift in Sources */,
 				0A7B44A3264BC5040061514B /* RegistrationFinalStepVC.swift in Sources */,
+				0ADEE0F526566F6900013688 /* TransitionAnimator.swift in Sources */,
 				0A7E2DF926529FC100305CC9 /* PlantsDetailsVC.swift in Sources */,
 				0A7E2C9D2651234800305CC9 /* AddCategoryVC.swift in Sources */,
+				0ADEE0882655B52400013688 /* JobRequestStepTwoVC.swift in Sources */,
 				0AAD576B2646FB0300E368B6 /* AppDelegate.swift in Sources */,
 				0A7B44D8264C49940061514B /* ForgotPasswordVC.swift in Sources */,
 				0A7E2DEE2651834E00305CC9 /* SubCategoryTableViewCell.swift in Sources */,
@@ -519,16 +548,19 @@
 				0A7B44A9264BD0440061514B /* UserModel.swift in Sources */,
 				0A7B44E7265026F40061514B /* MenuVC.swift in Sources */,
 				0A7B446C264AF6340061514B /* RegistrationStepOneVC.swift in Sources */,
+				0ADEE0FB265699D900013688 /* PasswordViewController.swift in Sources */,
 				0ADEE0642655AA9A00013688 /* MonthMetadata.swift in Sources */,
 				0A7B4498264B9F770061514B /* LocationModel.swift in Sources */,
 				0A7B44CE264C37950061514B /* PlantVC.swift in Sources */,
 				0A7B44D1264C3B9D0061514B /* HiringVC.swift in Sources */,
+				0ADEE0FE26569E7E00013688 /* PhoneViewController.swift in Sources */,
 				0A7E2E572653A23900305CC9 /* AddPlantNameVC.swift in Sources */,
 				0A7B44CB264C32CE0061514B /* TabBarVC.swift in Sources */,
 				0A7E2CA326512E5900305CC9 /* SelectCategoryVC.swift in Sources */,
 				0A7B44D4264C3BF90061514B /* ChatRoomVC.swift in Sources */,
 				0A7E2E5D2653A66600305CC9 /* AddPlantFrequencyVC.swift in Sources */,
 				0A7B44AC264BE2CA0061514B /* ProgressHUD.swift in Sources */,
+				0ADEE0822655AFEC00013688 /* CalendarDateCell.swift in Sources */,
 				0A7B43F2264AC3FC0061514B /* UIColorExtensions.swift in Sources */,
 				0A7B44E1264D97270061514B /* SkillsVC.swift in Sources */,
 				0A7E2D892651313C00305CC9 /* CategoryModel.swift in Sources */,

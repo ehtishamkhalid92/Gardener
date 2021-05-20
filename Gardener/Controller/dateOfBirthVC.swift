@@ -50,7 +50,7 @@ class dateOfBirthVC: UIViewController {
     
     @IBAction func nextBtnTapped(_ sender: UIButton) {
         if postDate == nil {
-            showAlert(type: .information, Alert: "Information", details: "Please select your date of birth!", controller: self, status: false)
+            showAlert(title: "Date not selected!", message: "Please select your date of birth to continue.", controller: self)
         }else {
             updateUser()
         }
@@ -139,7 +139,7 @@ class dateOfBirthVC: UIViewController {
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

@@ -129,8 +129,7 @@ class MenuVC: UIViewController {
         //Removes image from storage
         storageRef.delete { error in
             if let error = error {
-                print(error)
-                showAlert(type: .error, Alert: "Error", details: error.localizedDescription, controller: self, status: false)
+                showAlert(title: "Delete Image!", message: "\(String(describing: error.localizedDescription))", controller: self)
             } else {
                 // File deleted successfully
                 let filePath = self.ref?.childByAutoId().key ?? ""
@@ -151,8 +150,7 @@ class MenuVC: UIViewController {
 
         storageRef.putData(imageData, metadata: metaDataConfig){ (metaData, error) in
             if let error = error {
-                print(error.localizedDescription)
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: error.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Upload Image", message: "Error: \(error.localizedDescription)", controller: self)
                 return
             }
 
@@ -165,10 +163,10 @@ class MenuVC: UIViewController {
     
     private func updateUser(imageString:String,imageId:String){
         user.filePath = imageString
-        user.imageName = imageId
+        user.fileName = imageId
         let dict:[String:Any] = [
             "filePath":user.filePath,
-            "imageName":user.imageName
+            "imageName":user.fileName
         ]
         self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
@@ -180,7 +178,7 @@ class MenuVC: UIViewController {
                 }
                 Toast.show(message: "Successfully Updated", controller: self)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }
@@ -201,7 +199,7 @@ extension MenuVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate
         self.dismiss(animated: true, completion: nil)
         if let image = info[.editedImage] as? UIImage {
             self.profileImage.image = image
-            self.deleteImage(imageURl: user.imageName, image: image)
+            self.deleteImage(imageURl: user.fileName, image: image)
         }
         
     }

@@ -23,6 +23,8 @@ class SelectSubPlantVC: UIViewController, UISearchBarDelegate {
     private var ref: DatabaseReference!
     private var progressIndicator = ProgressHUD(text: "Please wait...")
     private var isFilter = false
+//    private var numberOfPosts: Int = 10
+    
     //MARK:- View Life Cycle.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,33 +82,36 @@ class SelectSubPlantVC: UIViewController, UISearchBarDelegate {
     
     private func getProductDataFromDatabase() {
         self.view.addSubview(progressIndicator)
-        ref.child("Plants").child("Data").child(category.name).observe(.childAdded) { (snapshot) in
-            if !snapshot.exists() {
-                Toast.show(message: "No Category Found!", controller: self)
-                return
-            }
-            self.progressIndicator.removeFromSuperview()
-            var data = PlantModel()
-            guard let dict = snapshot.value as? [String:Any] else {
-                print("Error")
-                return
-                
-            }
-            data.amountOfWater = dict["amountOfWater"] as? String ?? ""
-            data.categoryId = dict["categoryId"] as? String ?? ""
-            data.categoryName = dict["categoryName"] as? String ?? ""
-            data.createdDate = dict["createdDate"] as? String ?? ""
-            data.fileName = dict["fileName"] as? String ?? ""
-            data.filePath = dict["filePath"] as? String ?? ""
-            data.frequencyOfWater = dict["frequencyOfWater"] as? String ?? ""
-            data.id = dict["id"] as? String ?? ""
-            data.location = dict["location"] as? String ?? ""
-            data.primaryName = dict["primaryName"] as? String ?? ""
-            data.secoundryName = dict["secoundryName"] as? String ?? ""
-            data.sunlight = dict["sunlight"] as? String ?? ""
-            data.userId = dict["userId"] as? String ?? ""
+//        ref.child("Plants").child("Data").child(category.name).queryOrdered(byChild:"id").queryLimited(toLast: UInt(numberOfPosts))
+        ref.child("Plants").child("Data").child(category.name).observe(.value) { (snapshot) in
             
-            self.array.append(data)
+            self.progressIndicator.removeFromSuperview()
+            if !snapshot.exists() {
+                showAlert(title: "No Data Found!", message: "\(self.category.name) has no data", controller: self)
+                return
+            }
+            for child in snapshot.children {
+                let snap = child as? DataSnapshot
+                guard let dict = snap?.value as? NSDictionary else {
+                    print("Error")
+                    return
+                }
+                var data = PlantModel()
+                data.amountOfWater = dict["amountOfWater"] as? String ?? ""
+                data.categoryId = dict["categoryId"] as? String ?? ""
+                data.categoryName = dict["categoryName"] as? String ?? ""
+                data.createdDate = dict["createdDate"] as? String ?? ""
+                data.fileName = dict["fileName"] as? String ?? ""
+                data.filePath = dict["filePath"] as? String ?? ""
+                data.frequencyOfWater = dict["frequencyOfWater"] as? String ?? ""
+                data.id = dict["id"] as? String ?? ""
+                data.location = dict["location"] as? String ?? ""
+                data.primaryName = dict["primaryName"] as? String ?? ""
+                data.secoundryName = dict["secoundryName"] as? String ?? ""
+                data.sunlight = dict["sunlight"] as? String ?? ""
+                data.userId = dict["userId"] as? String ?? ""
+                self.array.append(data)
+            }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -115,6 +120,18 @@ class SelectSubPlantVC: UIViewController, UISearchBarDelegate {
             Toast.show(message: error.localizedDescription, controller: self)
         }
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y + 100) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+//            // You have reeached bottom (well not really, but you have reached 100px less)
+//            // Increase post limit and read posts
+//            print("Pagination Working")
+//            numberOfPosts += 3
+//            getProductDataFromDatabase()
+//        }
+//    }
+    
+
     
 
 }

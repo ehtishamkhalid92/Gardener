@@ -36,21 +36,21 @@ class RateVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func nextBtnTapped(_ sender: UIButton) {
-        if hourTextField.text!.isEmpty {
-            showAlert(type: .information, Alert: "Information", details: "Please enter hourly rate", controller: self, status: false)
-            hourTextField.becomeFirstResponder()
-        }else if oneToFiveTextField.text!.isEmpty {
-            showAlert(type: .information, Alert: "Information", details: "Please enter 1-5 Plant rate", controller: self, status: false)
-            oneToFiveTextField.becomeFirstResponder()
-        }else if sixToFifteenTextField.text!.isEmpty {
-            showAlert(type: .information, Alert: "Information", details: "Please enter 6-15 Plant rate", controller: self, status: false)
-            sixToFifteenTextField.becomeFirstResponder()
-        }else if sixteenPlusTextField.text!.isEmpty {
-            showAlert(type: .information, Alert: "Information", details: "Please enter 16+ Plant rate", controller: self, status: false)
-            sixteenPlusTextField.becomeFirstResponder()
-        }else {
+//        if hourTextField.text!.isEmpty {
+//            showAlert(type: .information, Title: "Information", Message: "Please enter hourly rate", controller: self, status: false)
+//            hourTextField.becomeFirstResponder()
+//        }else if oneToFiveTextField.text!.isEmpty {
+//            showAlert(type: .information, Title: "Information", Message: "Please enter 1-5 Plant rate", controller: self, status: false)
+//            oneToFiveTextField.becomeFirstResponder()
+//        }else if sixToFifteenTextField.text!.isEmpty {
+//            showAlert(type: .information, Title: "Information", Message: "Please enter 6-15 Plant rate", controller: self, status: false)
+//            sixToFifteenTextField.becomeFirstResponder()
+//        }else if sixteenPlusTextField.text!.isEmpty {
+//            showAlert(type: .information, Title: "Information", Message: "Please enter 16+ Plant rate", controller: self, status: false)
+//            sixteenPlusTextField.becomeFirstResponder()
+//        }else {
             updateUser()
-        }
+//        }
     }
     
     //MARK:- Private Functions
@@ -117,7 +117,7 @@ class RateVC: UIViewController, UITextFieldDelegate {
                 }
                 SessionManager.instance.loginData()
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

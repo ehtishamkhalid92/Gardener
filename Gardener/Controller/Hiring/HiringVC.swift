@@ -57,7 +57,11 @@ class HiringVC: UIViewController {
     }
     
     @IBAction func findGardenerBtnTapped(_ sender: UIButton) {
-        
+        let SB = UIStoryboard(name: "Hiring", bundle: nil)
+        let vc = SB.instantiateViewController(identifier: "JobRequestStepOneVC") as! JobRequestStepOneVC
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK:- Private Functions.

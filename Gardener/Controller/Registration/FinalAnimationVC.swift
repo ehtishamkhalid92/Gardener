@@ -41,6 +41,7 @@ class FinalAnimationVC: UIViewController {
         self.nameLbl.text = "\(user.firstName) \(user.lastName)"
         self.addressLbl.text = "\(user.city) \(user.state), \(user.country) \(user.postalCode)"
         user.isUserVerified = false
+        self.user.isPhoneVerified = false
         if user.role == "U" {
             self.succefullyMessageLbl.text = MsgForUser
             self.user.isProfileCompleted = true
@@ -52,13 +53,14 @@ class FinalAnimationVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             let dict:[String:Any] = [
                 "isProfileCompleted":self.user.isProfileCompleted,
-                "isUserVerified":self.user.isUserVerified
+                "isUserVerified":self.user.isUserVerified,
+                "isPhoneVerified": self.user.isPhoneVerified
             ]
             self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
                 if err == nil {
                     SessionManager.instance.logout()
                 }else{
-                    showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                    showAlert(title: "Registration", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
                 }
             }
         }

@@ -52,3 +52,8 @@ class Toast {
         })
     }
 }
+func showAlert(title:String?,message:String?,controller:UIViewController){
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Done", style: .destructive, handler: nil))
+    controller.present(alert, animated: true, completion: nil)
+}

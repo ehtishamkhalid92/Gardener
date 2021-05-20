@@ -36,7 +36,7 @@ class AddPlantFrequencyVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func saveBtnTapped(_ sender: UIButton) {
         if inputTextField.text!.isEmpty || Int(inputTextField.text!) == 0 {
-            showAlert(type: .information, Alert: "Add Plant", details: "Please write Frequency of water.", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter Frequency of water needed to water your plant. Greater than 0", controller: self)
         }else {
             if editStatus == true {
                 updatePlant()
@@ -80,7 +80,7 @@ class AddPlantFrequencyVC: UIViewController, UITextFieldDelegate {
             if err == nil {
                 self.updateMyPlant(dict: dict)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.plantData.primaryName)", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }
@@ -92,7 +92,7 @@ class AddPlantFrequencyVC: UIViewController, UITextFieldDelegate {
                 self.delegate?.push(self.plantData)
                 self.dismiss(animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.plantData.primaryName)", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }

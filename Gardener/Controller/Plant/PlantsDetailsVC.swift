@@ -52,7 +52,7 @@ class PlantsDetailsVC: UIViewController {
     
     //MARK:- Actions.
     @IBAction func deleteBtnTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Delete \(data.primaryName)", message: "Do you wish to delete your plant permanantly?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Delete \(data.primaryName)", message: "Do you wish to delete \(data.primaryName) permanantly?", preferredStyle: .actionSheet)
         let cameraAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             self.deleteImage()
         }
@@ -195,8 +195,7 @@ class PlantsDetailsVC: UIViewController {
         //Removes image from storage
         storageRef.delete { error in
             if let error = error {
-                print(error)
-                showAlert(type: .error, Alert: "Error", details: error.localizedDescription, controller: self, status: false)
+                showAlert(title: "Delete Image", message: "\(String(describing: error.localizedDescription))", controller: self)
             } else {
                 // File deleted successfully
                 self.deletePlant()
@@ -209,7 +208,7 @@ class PlantsDetailsVC: UIViewController {
             if error == nil {
                 self.deleteMyPlant()
             }else {
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: error?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Deleting \(self.data.primaryName) Data", message: "Error: \(error?.localizedDescription ?? "")", controller: self)
             }
         }
     }
@@ -219,7 +218,7 @@ class PlantsDetailsVC: UIViewController {
             if error == nil {
                 self.dismiss(animated: true, completion: nil)
             }else {
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: error?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Deleting \(self.data.primaryName) Data", message: "Error: \(error?.localizedDescription ?? "")", controller: self)
             }
         }
     }

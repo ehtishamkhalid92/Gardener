@@ -28,10 +28,14 @@ class ForgotPasswordVC: UIViewController {
     @IBAction func sendRequestBtnTapped(_ sender: UIButton) {
         Auth.auth().sendPasswordReset(withEmail: emailTextField.text!) { (error) in
             if error == nil {
-                showAlert(type: .success, Alert: "Request Send", details: "An email is send to your register email address", controller: self, status: false)
-                self.emailTextField.text = ""
+                let alert = UIAlertController(title: "Reset Password Request Send!", message: "An email is send to your register email address. Please click the link in the email to reset your password.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
+                    self.dismiss(animated: true, completion: nil)
+                }))
+                self.present(alert, animated: true, completion: nil)
+                
             }else {
-                showAlert(type: .error, Alert: "Error", details: "\(error?.localizedDescription ?? "")", controller: self, status: false)
+                showAlert(title: "Reset Password", message: "\(error?.localizedDescription ?? "")", controller: self)
             }
         }
     }

@@ -33,9 +33,9 @@ class AddPlantNameVC: UIViewController {
     //MARK:- Actions.
     @IBAction func saveBtnTapped(_ sender: UIButton) {
         if primaryNameTextField.text!.isEmpty{
-            showAlert(type: .information, Alert: "Add Plant", details: "Please write Primary Name", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter primary name of the plant.", controller: self)
         }else if secoundryNameTextField.text!.isEmpty {
-            showAlert(type: .information, Alert: "Add Plant", details: "Please write Secoundry Name.", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter secoundry name of the plant.", controller: self)
         }else{
             if editStatus == true {
                 updatePlant()
@@ -78,7 +78,7 @@ class AddPlantNameVC: UIViewController {
             if err == nil {
                 self.updateMyPlant(dict: dict)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.plantData.primaryName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }
@@ -90,7 +90,7 @@ class AddPlantNameVC: UIViewController {
                 self.delegate?.push(self.plantData)
                 self.dismiss(animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.plantData.primaryName) Data", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }

@@ -38,7 +38,7 @@ class AddPlantLocationVC: UIViewController {
     //MARK:- Actions.
     @IBAction func saveBtnTapped(_ sender: UIButton) {
         if inputTextField.text!.isEmpty{
-            showAlert(type: .information, Alert: "Add Plant", details: "Please select plant location", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter location where your plant can grow.", controller: self)
         }else {
             if editStatus == true {
                 updatePlant()
@@ -87,8 +87,7 @@ class AddPlantLocationVC: UIViewController {
         
         storageRef.putData(imageData, metadata: metaDataConfig){ (metaData, error) in
             if let error = error {
-                print(error.localizedDescription)
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: error.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Upload \(self.plantData.primaryName) Image", message: "Error: \(error.localizedDescription )", controller: self)
                 return
             }
             
@@ -123,7 +122,7 @@ class AddPlantLocationVC: UIViewController {
             if err == nil {
                 self.addMyPlant(dict: dict, plantId: Id)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "\(self.plantData.primaryName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }
@@ -137,7 +136,7 @@ class AddPlantLocationVC: UIViewController {
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.window?.rootViewController = vc
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "\(self.plantData.primaryName) Data", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }
@@ -153,7 +152,7 @@ class AddPlantLocationVC: UIViewController {
             if err == nil {
                 self.updateMyPlant(dict: dict)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.plantData.primaryName) Data", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }
@@ -165,7 +164,7 @@ class AddPlantLocationVC: UIViewController {
                 self.delegate?.push(self.plantData)
                 self.dismiss(animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(self.plantData.primaryName) Data", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }

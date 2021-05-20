@@ -35,9 +35,9 @@ class AddCategoryVC: UIViewController {
     //MARK:- Actions.
     @IBAction func saveBtnTapped(_ sender: UIButton) {
         if self.selectedImage == nil {
-            showAlert(type: .information, Alert: "Plant Category", details: "Please select image", controller: self, status: false)
+            showAlert(title: "Image Not Selected!", message: "Please select image to continue", controller: self)
         }else if self.nameTextField.text!.isEmpty{
-            showAlert(type: .information, Alert: "Plant Category", details: "Please enter category name", controller: self, status: false)
+            showAlert(title: "Empty Text Field!", message: "Please enter name of the plant in the text field.", controller: self)
         }else {
             let filePath = self.ref?.childByAutoId().key ?? ""
             uploadImagePic(image: self.selectedImage!, name: "", filePath: filePath)
@@ -84,7 +84,7 @@ class AddCategoryVC: UIViewController {
         storageRef.putData(imageData, metadata: metaDataConfig){ (metaData, error) in
             if let error = error {
                 print(error.localizedDescription)
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: error.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Upload Image", message: "\(String(describing: error.localizedDescription))", controller: self)
                 return
             }
 
@@ -110,7 +110,7 @@ class AddCategoryVC: UIViewController {
                 Toast.show(message: "Successfully Added", controller: self)
                 self.dismiss(animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Add Category", message: "\(String(describing: err?.localizedDescription))", controller: self)
             }
         }
     }

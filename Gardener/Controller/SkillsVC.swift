@@ -158,7 +158,7 @@ class SkillsVC: UIViewController {
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
             }else{
-                showAlert(type: .error, Alert: "Error", details: "\(String(describing: err?.localizedDescription))", controller: self, status: false)
+                showAlert(title: "Update \(user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }
         }
     }

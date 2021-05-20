@@ -25,11 +25,24 @@ class PlantVC: UIViewController {
     private var user = SessionManager.instance.userData
     private var ref: DatabaseReference!
     private var progressIndicator = ProgressHUD(text: "Please wait...")
+    let transition = TransitionAnimator()
+    private var selectedCell = UICollectionViewCell()
+    
     //MARK:-  View Life Cycle.
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         getProductDataFromDatabase()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.selectedCell.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.selectedCell.isHidden = true
     }
     
     //MARK:- Actions.
@@ -157,6 +170,7 @@ extension PlantVC: UICollectionViewDelegate,UICollectionViewDataSource{
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.row < array.count else {return}
+        selectedCell = collectionView.cellForItem(at: indexPath) as! AddPlantCollectionViewCell
         let instance = array[indexPath.row]
         if instance.id == "97415"{
             let vc = storyboard?.instantiateViewController(identifier: "SelectCategoryVC") as! SelectCategoryVC
@@ -168,8 +182,25 @@ extension PlantVC: UICollectionViewDelegate,UICollectionViewDataSource{
             vc.data = array[indexPath.row]
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
+            vc.transitioningDelegate = self
             self.present(vc, animated: true, completion: nil)
         }
     }
     
+}
+extension PlantVC: UIViewControllerTransitioningDelegate {
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let originFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil) else {
+            return transition
+        }
+        transition.originFrame = originFrame
+        transition.presenting = true
+        return transition
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
+    }
 }
