@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A58751B2656F83B00B818EA /* SkillsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A58751A2656F83B00B818EA /* SkillsCollectionViewCell.swift */; };
+		0A58751E2656FD6600B818EA /* ProfileDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A58751D2656FD6600B818EA /* ProfileDetailsVC.swift */; };
 		0A7B43F2264AC3FC0061514B /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B43EE264AC3FC0061514B /* UIColorExtensions.swift */; };
 		0A7B43F3264AC3FC0061514B /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B43EF264AC3FC0061514B /* UIViewExtensions.swift */; };
 		0A7B43F4264AC3FC0061514B /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7B43F0264AC3FC0061514B /* UIButtonExtensions.swift */; };
@@ -81,6 +83,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A58751A2656F83B00B818EA /* SkillsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsCollectionViewCell.swift; sourceTree = "<group>"; };
+		0A58751D2656FD6600B818EA /* ProfileDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsVC.swift; sourceTree = "<group>"; };
 		0A7B43EE264AC3FC0061514B /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		0A7B43EF264AC3FC0061514B /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		0A7B43F0264AC3FC0061514B /* UIButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 				0A7B44E3264DA1190061514B /* RateVC.swift */,
 				0A7B44E6265026F30061514B /* MenuVC.swift */,
 				0ADEE05B2654EBD800013688 /* FeedbackVC.swift */,
+				0A58751D2656FD6600B818EA /* ProfileDetailsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 				0A7E2C932650740C00305CC9 /* AddPlantCollectionViewCell.swift */,
 				0A7E2C9F26512DDB00305CC9 /* CategoryTableViewCell.swift */,
 				0A7E2DED2651834E00305CC9 /* SubCategoryTableViewCell.swift */,
+				0A58751A2656F83B00B818EA /* SkillsCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -517,6 +523,7 @@
 				0A7E2DE826516A2B00305CC9 /* AddPlantImageVC.swift in Sources */,
 				0A7E2E632653A88700305CC9 /* AddPlantLocationVC.swift in Sources */,
 				0A7B449E264BB0310061514B /* RegistrationStepFourVC.swift in Sources */,
+				0A58751B2656F83B00B818EA /* SkillsCollectionViewCell.swift in Sources */,
 				0A7B43F5264AC3FC0061514B /* GlobalStrings.swift in Sources */,
 				0A7B4414264AD4080061514B /* AlertViewController.swift in Sources */,
 				0A7B44A6264BCAC70061514B /* FinalAnimationVC.swift in Sources */,
@@ -544,6 +551,7 @@
 				0A7B4491264B254C0061514B /* CountryCodeModel.swift in Sources */,
 				0A7B44EA2650404C0061514B /* Toast.swift in Sources */,
 				0A7B449B264B9FE50061514B /* RegistrationStepThreeVC.swift in Sources */,
+				0A58751E2656FD6600B818EA /* ProfileDetailsVC.swift in Sources */,
 				0A7E2DE42651418E00305CC9 /* SuggestVC.swift in Sources */,
 				0A7B44A9264BD0440061514B /* UserModel.swift in Sources */,
 				0A7B44E7265026F40061514B /* MenuVC.swift in Sources */,

@@ -80,14 +80,14 @@ class SkillsVC: UIViewController {
                 self.array.append("Trimming")
             }
         }else if sender.tag == 5 {
-            if array.contains("Planting") {
+            if array.contains("Planting and Potting ") {
                 sender.setImage(nil, for: .normal)
-                if let index = array.firstIndex(of: "Planting") {
+                if let index = array.firstIndex(of: "Planting and Potting") {
                     array.remove(at: index)
                 }
             }else {
                 sender.setImage(#imageLiteral(resourceName: "selectTick"), for: .normal)
-                self.array.append("Planting")
+                self.array.append("Planting and Potting")
             }
         }
         sender.tintColor = mediumGreen

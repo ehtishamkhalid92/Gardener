@@ -41,6 +41,14 @@ class MenuVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc func profileBtnTapped(sender: UITapGestureRecognizer){
+        let SB = UIStoryboard(name: "Main", bundle: nil)
+        let vc = SB.instantiateViewController(identifier: "ProfileDetailsVC") as! ProfileDetailsVC
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     @IBAction func editProfileTapped(_ sender: UIButton) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -113,6 +121,10 @@ class MenuVC: UIViewController {
         let logout = UITapGestureRecognizer(target: self, action: #selector(logout(sender:)))
         self.logoutView.isUserInteractionEnabled = true
         self.logoutView.addGestureRecognizer(logout)
+        
+        let profile = UITapGestureRecognizer(target: self, action: #selector(profileBtnTapped(sender:)))
+        self.editProfileView.isUserInteractionEnabled = true
+        self.editProfileView.addGestureRecognizer(profile)
         
         if user.notification == true {
             notificationSwitch.isOn = true

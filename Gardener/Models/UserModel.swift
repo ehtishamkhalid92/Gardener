@@ -38,5 +38,7 @@ struct UserModel: Codable {
     var jobType = String()
     var notification = Bool()
     var password = String()
+    var longitude = Double()
+    var latitude = Double()
 }
 

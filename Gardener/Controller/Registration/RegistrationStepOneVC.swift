@@ -20,6 +20,8 @@ class RegistrationStepOneVC: UIViewController {
     //MARK:- Variables.
     private var ref: DatabaseReference!
     private var progressIndicator = ProgressHUD(text: "Please wait...")
+    var editStatus:Bool = false
+    var user = UserModel()
     
     //MARK:- View Life Cycle.
     override func viewDidLoad() {
@@ -44,25 +46,60 @@ class RegistrationStepOneVC: UIViewController {
         }else if lastNameTextField.text!.isEmpty {
             lastNameTextField.becomeFirstResponder()
         }else {
-            let SB = UIStoryboard(name: "Main", bundle: nil)
-            let vc = SB.instantiateViewController(identifier: "EmailViewController") as! EmailViewController
-            var user = UserModel()
-            user.firstName = firstNameTextField.text!
-            user.lastName = lastNameTextField.text!
-            vc.user = user
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            self.present(vc, animated: true, completion: nil)
+            if editStatus == true {
+                updateUser()
+            }else {
+                let SB = UIStoryboard(name: "Main", bundle: nil)
+                let vc = SB.instantiateViewController(identifier: "EmailViewController") as! EmailViewController
+                var user = UserModel()
+                user.firstName = firstNameTextField.text!
+                user.lastName = lastNameTextField.text!
+                vc.user = user
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            }
         }
     }
     
     private func setupViews() {
+        if editStatus == true {
+            nextBtn.setTitle("Update", for: .normal)
+            firstNameTextField.text = self.user.firstName
+            lastNameTextField.text = self.user.lastName
+        }
         ref = Database.database().reference()
-//        self.headingLbl.text = "Basic\nInformation"
         self.firstNameTextField.UISetupToTextField()
         self.lastNameTextField.UISetupToTextField()
         self.nextBtn.addButtonShadow()
     }
+    
+    private func updateUser(){
+        self.view.addSubview(progressIndicator)
+        user.firstName = firstNameTextField.text!
+        user.lastName = lastNameTextField.text!
+        let dict:[String:Any] = [
+            "firstName": self.user.firstName,
+            "lastName": self.user.lastName
+        ]
+        
+        self.ref.child("USER").child(user.userId).updateChildValues(dict) { (err, dbRef) in
+            self.progressIndicator.removeFromSuperview()
+            if err == nil {
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.user) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: SessionManager.instance.user)
+                }
+                SessionManager.instance.userData = self.user
+                self.dismiss(animated: true, completion: nil)
+            }else{
+                showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
+            }
+        }
+    }
+    
+    
   
 }
 

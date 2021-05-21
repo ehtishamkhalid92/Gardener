@@ -24,7 +24,6 @@ class SessionManager {
                 self.userData = loadedPerson
             }
         }
-        print(self.userData.isProfileCompleted)
         if self.userData.isProfileCompleted == false {
             let SB = UIStoryboard(name: "Main", bundle: nil)
             let vc = SB.instantiateViewController(withIdentifier: "dateOfBirthVC") as! dateOfBirthVC
@@ -38,6 +37,7 @@ class SessionManager {
         }
         
     }
+    
     
     func isUserLoggedIn() -> Bool {
       return Auth.auth().currentUser != nil

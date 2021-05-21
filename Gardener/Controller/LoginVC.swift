@@ -112,6 +112,13 @@ class LoginVC: UIViewController {
             user.role = value?["role"] as? String ?? ""
             user.state = value?["state"] as? String ?? ""
             user.userId = value?["userID"] as? String ?? ""
+            user.DOB = value?["DOB"] as? String ?? ""
+            user.Availability = value?["available"] as? [String] ?? []
+            user.skills = value?["skills"] as? [String] ?? []
+            user.rates = value?["rates"] as? [String] ?? []
+            user.longitude = value?["longitude"] as? Double ?? 0.0
+            user.latitude = value?["latitude"] as? Double ?? 0.0
+            user.jobType = value?["jobType"] as? String ?? ""
             user.notification = false
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(user) {

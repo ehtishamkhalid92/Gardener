@@ -28,6 +28,7 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     lazy var user = UserModel()
     private var ref: DatabaseReference!
     private var progressIndicator = ProgressHUD(text: "Please wait...")
+    var editStatus: Bool = false
     
     //MARK:- View Life cycle.
     override func viewDidLoad() {
@@ -37,17 +38,23 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
     
     //MARK:- Actions
     @objc func annotationBtnTapped(sender:UITapGestureRecognizer){
-        let SB = UIStoryboard(name: "Main", bundle: nil)
-        let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
-        self.user.city = locationDictionary.city
-        self.user.state = locationDictionary.state
-        self.user.country = locationDictionary.country
-        self.user.postalCode = locationDictionary.zipcode
-        self.user.address = locationDictionary.titleString
-        vc.user = self.user
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true, completion: nil)
+        if editStatus == true {
+            updateUser()
+        }else {
+            let SB = UIStoryboard(name: "Main", bundle: nil)
+            let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
+            self.user.city = locationDictionary.city
+            self.user.state = locationDictionary.state
+            self.user.country = locationDictionary.country
+            self.user.postalCode = locationDictionary.zipcode
+            self.user.address = locationDictionary.titleString
+            self.user.longitude = locationDictionary.longtitude
+            self.user.latitude = locationDictionary.latitude
+            vc.user = self.user
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func backBtnTapped(_ sender: UIButton) {
@@ -62,24 +69,28 @@ class RegistrationStepThreeVC: UIViewController,UISearchBarDelegate,MKMapViewDel
         user.country = locationDictionary.country
         user.postalCode = locationDictionary.zipcode
         user.address = locationDictionary.titleString
-        
+        user.longitude = locationDictionary.longtitude
+        user.latitude = locationDictionary.latitude
         let dict:[String:Any] = [
             "city":user.city,
             "state":user.state,
             "country":user.country,
             "postalCode":user.postalCode,
-            "address":user.address
+            "address":user.address,
+            "longitude": user.longitude,
+            "latitude": user.latitude
         ]
         
         self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
             if err == nil {
-                let SB = UIStoryboard(name: "Main", bundle: nil)
-                let vc = SB.instantiateViewController(identifier: "RegistrationStepFourVC") as! RegistrationStepFourVC
-                vc.user = self.user
-                vc.modalPresentationStyle = .fullScreen
-                vc.modalTransitionStyle = .crossDissolve
-                self.present(vc, animated: true, completion: nil)
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.user) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: SessionManager.instance.user)
+                }
+                SessionManager.instance.userData = self.user
+                self.dismiss(animated: true, completion: nil)
             }else{
                 showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
             }

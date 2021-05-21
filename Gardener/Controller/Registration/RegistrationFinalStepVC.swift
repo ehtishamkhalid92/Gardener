@@ -55,27 +55,6 @@ class RegistrationFinalStepVC: UIViewController {
         self.gardenerView.addGestureRecognizer(gardener)
     }
     
-//    private func UpdateUser(userType:String){
-//        self.view.addSubview(progressIndicator)
-//        user.role = userType
-//        let dict:[String:Any] = [
-//            "role":user.role
-//        ]
-//        self.ref.child("USER").child(self.user.userId).updateChildValues(dict) { (err, dbRef) in
-//            self.progressIndicator.removeFromSuperview()
-//            if err == nil {
-//                let SB = UIStoryboard(name: "Main", bundle: nil)
-//                let vc = SB.instantiateViewController(identifier: "FinalAnimationVC") as! FinalAnimationVC
-//                vc.user = self.user
-//                vc.modalPresentationStyle = .fullScreen
-//                vc.modalTransitionStyle = .crossDissolve
-//                self.present(vc, animated: true, completion: nil)
-//            }else{
-//                showAlert(title: "Update \(self.user.firstName) Data", message: "Error: \(err?.localizedDescription ?? "")", controller: self)
-//            }
-//        }
-//    }
-    
     private func CreateUser(userType:String){
         self.user.role = userType
         self.view.addSubview(progressIndicator)
@@ -135,7 +114,6 @@ class RegistrationFinalStepVC: UIViewController {
         let date = df.string(from: Date())
         user.date = date
         user.isPhoneVerified = false
-        print(user)
         let dict :[String:Any] = [
             "userID": self.user.userId,
             "date":self.user.date,
@@ -151,9 +129,10 @@ class RegistrationFinalStepVC: UIViewController {
             "city": self.user.city,
             "country": self.user.country,
             "state": self.user.state,
+            "longitude": self.user.longitude,
+            "latitude": self.user.latitude,
             "role": self.user.role,
         ]
-        print(dict)
         self.ref.child("USER").child(self.user.userId).setValue(dict) { (err, dbRef) in
             self.progressIndicator.removeFromSuperview()
             if err == nil {
